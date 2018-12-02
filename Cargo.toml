@@ -1,0 +1,6 @@
+# Cargo.toml
+[workspace]
+members = [
+    "2018/day01-1",
+    "2018/day01-2",
+]
