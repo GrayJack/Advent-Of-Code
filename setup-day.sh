@@ -11,6 +11,6 @@ if [ ! -d .git ]; then
     exit 1
 fi
 
-name="$(printf "aoc%02d" "$1")"
+name="$(printf "day%02d" "$1")"
 cargo +beta new --bin "$YEAR/$name"
 mkdir "$YEAR/$name/input"
