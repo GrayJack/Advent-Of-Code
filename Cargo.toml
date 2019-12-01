@@ -1,8 +1,0 @@
-# Cargo.toml
-[workspace]
-members = [
-    "2019/day01",
-    "2018/day01",
-    "2018/day02",
-    "2018/day03",
-]
