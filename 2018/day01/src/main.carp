@@ -1,0 +1,21 @@
+(load "git@github.com:carpentry-org/file.git@master")
+
+(defn-do parse_input [lines]
+    (Array.endo-map &Int.to-int lines))
+
+(defn first_part [lines]
+    (let-do [total (Array.reduce &(fn [a b] (+ a @b)) (zero) &(parse_input lines))]
+        (print* total)))
+
+(defn main []
+    (let-do [
+        input "../input/input.txt"
+        file (match (File.open-with input "r")
+                (Result.Success f) f
+                (Result.Error _) "")
+        lines (String.split-by file &[\n])
+        filtered (Array.endo-filter (not Array.empty?) lines)
+        ]
+        (first_part filtered)
+        ; (second_part filtered)
+        ))

@@ -9,42 +9,32 @@ use lazy_static::lazy_static;
 use regex::Regex;
 
 macro_rules! err {
-    ($($tt:tt)*) => { Err(Box::<Error>::from(format!($($tt)*))) }
+    ($($tt:tt)*) => { Err(Box::<dyn Error>::from(format!($($tt)*))) }
 }
 
 #[derive(Debug)]
 struct Claim {
-    id: u32,
+    id:       u32,
     x_inches: u32,
     y_inches: u32,
-    x_size: u32,
-    y_size: u32,
+    x_size:   u32,
+    y_size:   u32,
 }
 
 impl Claim {
     fn new(id: u32, x_inches: u32, y_inches: u32, x_size: u32, y_size: u32) -> Claim {
-        Claim {
-            id: id,
-            x_inches: x_inches,
-            y_inches: y_inches,
-            x_size: x_size,
-            y_size: y_size,
-        }
+        Claim { id, x_inches, y_inches, x_size, y_size }
     }
 
     fn iter_points(&self) -> IterPoints {
-        IterPoints {
-            claim: self,
-            pt_x: self.x_inches,
-            pt_y: self.y_inches,
-        }
+        IterPoints { claim: self, pt_x: self.x_inches, pt_y: self.y_inches }
     }
 }
 
 impl FromStr for Claim {
-    type Err = Box<Error>;
+    type Err = Box<dyn Error>;
 
-    fn from_str(s: &str) -> Result<Claim, Box<Error>> {
+    fn from_str(s: &str) -> Result<Claim, Box<dyn Error>> {
         lazy_static! {
             static ref RE: Regex = Regex::new(
                 r"(?x)
@@ -76,8 +66,8 @@ impl FromStr for Claim {
 
 struct IterPoints<'a> {
     claim: &'a Claim,
-    pt_x: u32,
-    pt_y: u32,
+    pt_x:  u32,
+    pt_y:  u32,
 }
 
 impl<'a> Iterator for IterPoints<'a> {
@@ -99,13 +89,13 @@ impl<'a> Iterator for IterPoints<'a> {
     }
 }
 
-fn first_part(grid: &HashMap<(u32, u32), u32>) -> Result<(), Box<Error>> {
+fn first_part(grid: &HashMap<(u32, u32), u32>) -> Result<(), Box<dyn Error>> {
     let count = grid.values().filter(|&&v| v > 1).count();
     println!("{}", count);
     Ok(())
 }
 
-fn second_part(claims: &[Claim], grid: &HashMap<(u32, u32), u32>) -> Result<(), Box<Error>> {
+fn second_part(claims: &[Claim], grid: &HashMap<(u32, u32), u32>) -> Result<(), Box<dyn Error>> {
     for claim in claims {
         if claim.iter_points().all(|pt| grid[&pt] == 1) {
             println!("Uncontested claim: {}", claim.id);
@@ -115,7 +105,7 @@ fn second_part(claims: &[Claim], grid: &HashMap<(u32, u32), u32>) -> Result<(), 
     err!("No uncontested claim")
 }
 
-fn main() -> Result<(), Box<Error>> {
+fn main() -> Result<(), Box<dyn Error>> {
     let mut input = String::new();
     stdin().read_to_string(&mut input)?;
 

@@ -1,3 +1,5 @@
+#!/bin/env julia
+
 function first_part(freqs)
     total = 0
 
