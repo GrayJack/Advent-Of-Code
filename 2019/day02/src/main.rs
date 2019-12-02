@@ -13,6 +13,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     println!("Part 1: {}", part1(&mut vec));
     println!("Part 2: {}", part2(&vec2));
+    println!("Part 2 (right way): {}", part2_right(vec2, 19_690_720));
 
     Ok(())
 }
@@ -58,6 +59,17 @@ fn part2(vec: &[i64]) -> i64 {
         }
     }
     ans
+}
+
+fn part2_right(mem: Vec<i64>, wanted: i64) -> i64 {
+    let mut program = mem;
+    program[1] = 0;
+    program[2] = 0;
+    let offset = part1(&mut program.clone());
+    let raw = wanted - offset;
+    program[1] = 1;
+    let multiplier = part1(&mut program) - offset;
+    100 * (raw/multiplier) + (raw % multiplier)
 }
 
 #[cfg(test)]
