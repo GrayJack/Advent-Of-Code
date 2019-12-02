@@ -1,0 +1,74 @@
+use std::{error::Error, fs::File, io::Read};
+use sugars::cvec;
+
+fn main() -> Result<(), Box<dyn Error>> {
+    let mut file = File::open("src/input.txt")?;
+    let mut input = String::new();
+    file.read_to_string(&mut input)?;
+
+    let mut vec: Vec<_> = input.trim().split(',').map(|e| e.parse::<i64>().ok().unwrap()).collect();
+    let vec2 = vec.clone();
+
+    vec[1] = 12; vec[2] = 2;
+
+    println!("Part 1: {}", part1(&mut vec));
+    println!("Part 2: {}", part2(&vec2));
+
+    Ok(())
+}
+
+fn part1(vec: &mut [i64]) -> i64 {
+    let mut index = 0;
+    loop {
+        let(pos1, pos2, to) = (vec[index+1] as usize, vec[index+2] as usize, vec[index+3] as usize);
+        match vec[index] {
+            1 => vec[to] = vec[pos1] + vec[pos2],
+            2 => vec[to] = vec[pos1] * vec[pos2],
+            99 => break,
+            _ => break,
+        }
+        index += 4;
+    }
+
+    vec[0]
+}
+
+fn part2(vec: &[i64]) -> i64 {
+    let mut ans = 0;
+    for noun in 0..100 {
+        for verb in 0..100 {
+            let mut memory = cvec![*x; x <- vec.iter()];
+            memory[1] = noun;
+            memory[2] = verb;
+            let mut index = 0;
+            loop {
+                let (pos1, pos2, to) = (memory[index+1] as usize, memory[index+2] as usize, memory[index+3] as usize);
+                match memory[index] {
+                    1 => memory[to] = memory[pos1] + memory[pos2],
+                    2 => memory[to] = memory[pos1] * memory[pos2],
+                    99 => break,
+                    _ => break,
+                }
+                index += 4;
+
+                if memory[0] == 19_690_720 {
+                    ans = 100 * noun + verb;
+                }
+            }
+        }
+    }
+    ans
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_part1() {
+        assert_eq!(2, part1(&mut [1,0,0,0,99]));
+        assert_eq!(2, part1(&mut [2,3,0,3,99]));
+        assert_eq!(2, part1(&mut [2,4,4,5,99,0]));
+        assert_eq!(30, part1(&mut [1,1,1,4,99,5,6,0,99]));
+    }
+}

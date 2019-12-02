@@ -1,5 +1,4 @@
-use std::io::Read;
-use std::{error::Error, fs::File};
+use std::{error::Error, fs::File, io::Read};
 
 fn main() -> Result<(), Box<dyn Error>> {
     let mut file = File::open("src/input.txt")?;
