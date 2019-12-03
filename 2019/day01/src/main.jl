@@ -1,4 +1,4 @@
-#!/bin/env julia
+#!/usr/bin/env julia
 
 function part1(elems)
     [(e ÷ 3 - 2) for e in elems] |> sum

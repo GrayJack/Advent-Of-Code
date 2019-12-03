@@ -1,4 +1,4 @@
-use std::{env, error::Error, fs::File, io::Read};
+use std::{env, error::Error, fs::File, io::Read, process};
 
 fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<_> = env::args().collect();
@@ -11,6 +11,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         println!("Part 2: {}", part2(&input));
     } else {
         eprintln!("Usage {} <INPUT_FILE>", args[0]);
+        process::exit(1);
     }
 
     Ok(())

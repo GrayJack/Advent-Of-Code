@@ -1,4 +1,4 @@
-use std::{env, error::Error, fs::File, io::Read};
+use std::{env, error::Error, fs::File, io::Read, process};
 use sugars::cvec;
 
 fn main() -> Result<(), Box<dyn Error>> {
@@ -20,6 +20,7 @@ fn main() -> Result<(), Box<dyn Error>> {
         println!("Part 2 (right way): {}", part2_right(vec2, 19_690_720));
     } else {
         eprintln!("Usage: {} <INPUT_FILE>", &args[0]);
+        process::exit(1);
     }
 
     Ok(())
