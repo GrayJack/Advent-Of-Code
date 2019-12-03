@@ -212,4 +212,54 @@ mod tests {
             )
         );
     }
+
+    #[test]
+    fn test_part2() {
+        assert_eq!(
+            30,
+            part2(&[Right(8), Up(5), Left(5), Down(3)], &[Up(7), Right(6), Down(4), Left(4)])
+        );
+        assert_eq!(
+            610,
+            part2(
+                &[
+                    Right(75),
+                    Down(30),
+                    Right(83),
+                    Up(83),
+                    Left(12),
+                    Down(49),
+                    Right(71),
+                    Up(7),
+                    Left(72)
+                ],
+                &[Up(62), Right(66), Up(55), Right(34), Down(71), Right(55), Down(58), Right(83)]
+            )
+        );
+    }
+
+    #[test]
+    fn test_optimal() {
+        assert_eq!(
+            (6, 30),
+            optimal(&[Right(8), Up(5), Left(5), Down(3)], &[Up(7), Right(6), Down(4), Left(4)])
+        );
+        assert_eq!(
+            (159, 610),
+            optimal(
+                &[
+                    Right(75),
+                    Down(30),
+                    Right(83),
+                    Up(83),
+                    Left(12),
+                    Down(49),
+                    Right(71),
+                    Up(7),
+                    Left(72)
+                ],
+                &[Up(62), Right(66), Up(55), Right(34), Down(71), Right(55), Down(58), Right(83)]
+            )
+        );
+    }
 }
