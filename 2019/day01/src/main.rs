@@ -1,4 +1,4 @@
-use std::{error::Error, fs::File, io::Read, env};
+use std::{env, error::Error, fs::File, io::Read};
 
 fn main() -> Result<(), Box<dyn Error>> {
     let args: Vec<_> = env::args().collect();
