@@ -29,7 +29,7 @@ function main()
     end
 
     println("Part 1: $(part1(elems))")
-    println("Part 1: $(part2(elems))")
+    println("Part 2: $(part2(elems))")
 end
 
 main()
