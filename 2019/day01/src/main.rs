@@ -1,12 +1,17 @@
-use std::{error::Error, fs::File, io::Read};
+use std::{error::Error, fs::File, io::Read, env};
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let mut file = File::open("src/input.txt")?;
-    let mut input = String::new();
-    file.read_to_string(&mut input)?;
+    let args: Vec<_> = env::args().collect();
+    if args.len() == 2 {
+        let mut file = File::open(&args[1])?;
+        let mut input = String::new();
+        file.read_to_string(&mut input)?;
 
-    println!("Part 1: {}", part1(&input));
-    println!("Part 2: {}", part2(&input));
+        println!("Part 1: {}", part1(&input));
+        println!("Part 2: {}", part2(&input));
+    } else {
+        eprintln!("Usage {} <INPUT_FILE>", args[0]);
+    }
 
     Ok(())
 }
