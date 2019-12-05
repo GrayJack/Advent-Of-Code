@@ -26,21 +26,10 @@ fn main() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-fn part1(vec: &mut [i64]) -> i64 {
-    let mut index = 0;
-    loop {
-        let (pos1, pos2, to) =
-            (vec[index + 1] as usize, vec[index + 2] as usize, vec[index + 3] as usize);
-        match vec[index] {
-            1 => vec[to] = vec[pos1] + vec[pos2],
-            2 => vec[to] = vec[pos1] * vec[pos2],
-            99 => break,
-            _ => break,
-        }
-        index += 4;
-    }
+fn part1(mem: &mut [i64]) -> i64 {
+    run_program(mem);
 
-    vec[0]
+    mem[0]
 }
 
 fn part2(vec: &[i64]) -> i64 {
@@ -86,6 +75,26 @@ fn part2_right(mem: Vec<i64>, wanted: i64) -> i64 {
     let multiplier = part1(&mut program) - offset;
 
     100 * (raw / multiplier) + (raw % multiplier)
+}
+
+fn run_program(mem: &mut [i64]) {
+    let mut index = 0;
+    loop {
+        match mem[index] {
+            1 => {
+                let (arg1, arg2, out) = (mem[index + 1] as usize, mem[index + 2] as usize, mem[index + 3] as usize);
+                mem[out] = mem[arg1] + mem[arg2];
+                index += 4;
+            },
+            2 => {
+                let (arg1, arg2, out) = (mem[index + 1] as usize, mem[index + 2] as usize, mem[index + 3] as usize);
+                mem[out] = mem[arg1] * mem[arg2];
+                index += 4;
+            },
+            99 => break,
+            _ => break,
+        }
+    }
 }
 
 #[cfg(test)]
