@@ -1,6 +1,6 @@
 (defn chars [str] (map string/from-bytes str))
 
-(def input (string/trim (slurp "input.txt")))
+(def input (string/trim (slurp "input")))
 (def num-array (map |(if (= $ "(") 1 -1) (chars input)))
 
 (def part1 (reduce + 0 num-array))
