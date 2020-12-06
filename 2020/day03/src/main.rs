@@ -26,7 +26,7 @@ fn part2(map: &[Vec<char>]) -> usize {
     walkers
         .into_iter()
         .map(|walker| walker.filter(|&block| block == BlockKind::Tree).count())
-        .fold(1, |acc, item| acc * item)
+        .product()
 }
 
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Ord, PartialOrd, Hash)]
