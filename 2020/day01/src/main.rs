@@ -8,9 +8,8 @@ fn main() -> BoxResult<()> {
     let input: Result<Vec<_>, _> = INPUT.lines().map(|v| v.parse::<i64>()).collect();
     let input = input?;
 
-
-    println!("Part1: {:?}", part1(&input)); // 158916
-    println!("Part2: {:?}", part2(&input)); // 165795564
+    println!("Part1: {:?}", part1(&input));
+    println!("Part2: {:?}", part2(&input));
 
     Ok(())
 }
